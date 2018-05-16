@@ -645,12 +645,40 @@ function woo_after(){ ?>
 
 //action remove
 
-remove_action('woocommerce_before_shop_loop_item_title','woocommerce_show_product_loop_sale_flash');
-remove_action('woocommerce_before_shop_loop_item_title','woocommerce_template_loop_product_thumbnail');
+remove_action('woocommerce_before_shop_loop_item_title','woocommerce_show_product_loop_sale_flash',10);
+remove_action('woocommerce_before_shop_loop_item_title','woocommerce_template_loop_product_thumbnail',10);
 
-remove_action('woocommerce_before_shop_loop_item','woocommerce_template_loop_product_link_open');
-remove_action('woocommerce_after_shop_loop_item','woocommerce_template_loop_product_link_close');
+remove_action('woocommerce_before_shop_loop_item','woocommerce_template_loop_product_link_open',10);
+remove_action('woocommerce_after_shop_loop_item','woocommerce_template_loop_product_link_close',5);
+remove_action('woocommerce_shop_loop_item_title','woocommerce_template_loop_product_title',10);
+remove_action('woocommerce_after_shop_loop_item_title','woocommerce_template_loop_rating',5);
+remove_action('woocommerce_after_shop_loop_item_title','woocommerce_template_loop_price',10);
 
 
 
 
+add_action('woocommerce_before_shop_loop_item_title','before_loop_item');
+function before_loop_item(){ ?>
+
+            <div class="product-thumb">
+            	<div class="product-overlay">
+            	<a href="<?php the_post_thumbnail(); ?>"><?php the_post_thumbnail(); ?></a>
+            	<?php 
+                global $product;
+
+echo apply_filters( 'woocommerce_loop_add_to_cart_link', // WPCS: XSS ok.
+	sprintf( '<a href="%s" data-quantity="%s" class="%s" %s>%s <i class="ti-bag"></i></a>',
+		esc_url( $product->add_to_cart_url() ),
+		esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
+		esc_attr( isset( $args['btn btn-color-out btn-sm'] ) ? $args['btn btn-color-out btn-sm'] : 'button' ),
+		isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
+		esc_html( $product->add_to_cart_text() )
+	),
+$product, $args );
+               
+            	?>
+              </div>
+            </div>
+<?php }
+
+add_action('woocommerce_shop_loop_item_title','');

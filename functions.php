@@ -604,10 +604,44 @@ function affter_shop_loop(){
 }
 // woocommerce before shop loop
 
-add_action('woocommerce_before_shop_loop','woo_before');
-function woo_before(){
+add_action('woocommerce_before_shop_loop','woo_before',10);
+function woo_before(){ ?>
+  <section>
+  	<div class="contaier">
+  	<div class="shop-menu">
+
+  		<?php }
+
+  	add_action('woocommerce_before_shop_loop','catalog_ordering_before',29);
+function catalog_ordering_before(){ ?>
 	
-}
+  	<div class="col-md-4 col-sm-4">
+            <div class="row">
+              <div class="form-select">
+
+  		<?php }
+  		  	add_action('woocommerce_before_shop_loop','catalog_ordering_after',31);
+function catalog_ordering_after(){ ?>
+	
+  	</div>
+            </div>
+              </div>
+              </div>
+
+  		<?php }  
+
+
+// woocommerc before shop 
+
+
+//woocommerce after markup 
+add_action('woocommerce_after_shop_loop','woo_after',10);
+function woo_after(){ ?>
+	</div>
+  </section>
+  	
+
+  		<?php } 		
 
 
 

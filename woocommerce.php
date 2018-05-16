@@ -15,6 +15,8 @@
         </div>
       </div>
     </section>
+
+
     <section>
       <div class="container">
         <div class="shop-menu">
@@ -23,6 +25,7 @@
               <h6 class="upper">Displaying 12 of 18 results</h6>
             </div>
           </div>
+          
           <div class="col-md-4 col-sm-4">
             <div class="row">
               <div class="form-select">
@@ -35,6 +38,9 @@
               </div>
             </div>
           </div>
+
+
+
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="shop-product">

@@ -26,6 +26,8 @@ function comet_setup() {
 
 	// Add default posts and comments RSS feed links to head.
 	add_theme_support( 'automatic-feed-links' );
+	
+	add_theme_support( 'woocommerce' );
 
 	/*
 	 * Let WordPress manage the document title.
@@ -508,8 +510,108 @@ function test_something_show_korabo($comment, $arg, $depth){
 
 
 
+//remove_action('woocommerce_before_checkout_form','woocommerce_checkout_login_form',10);
+//remove_action('woocommerce_before_checkout_form','woocommerce_checkout_coupon_form',10);
 
 
+
+// Our hooked in function - $fields is passed via the filter!
+add_filter( 'woocommerce_checkout_fields' , 'set_input_attrs' );
+
+// Our hooked in function - $fields is passed via the filter!
+function set_input_attrs( $fields ) {
+       $fields['billing']['billing_email']['type'] = 'email';
+       $fields['billing']['billing_phone']['type'] = 'tel';
+       $fields['billing']['billing_postcode']['type'] = 'tel';
+       $fields['shipping']['shipping_postcode']['type'] = 'tel';
+
+       return $fields;
+  }
 // for shortcodes 
 
 require_once('inc/shortcodes.php');
+// before header
+add_action('woocommerce_archive_description','header_before',10);
+function header_before(){ ?>
+   <section class="page-title parallax">
+      <div data-parallax="scroll" data-image-src="<?php echo get_template_directory_uri(); ?>/images/bg/19.jpg" class="parallax-bg"></div>
+      <div class="parallax-overlay">
+        <div class="centrize">
+          <div class="v-center">
+            <div class="container">
+              <div class="title center">
+                <h1 class="upper"><?php woocommerce_page_title(); ?></h1>
+                <h4>Free Delivery Worldwide.</h4>
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+<?php }
+
+add_action('add_meta_boxes', function(){
+add_meta_box('page-info','page information','all_page_information','page','normal');
+});
+
+
+function all_page_information(){ ?>
+	<p>
+		 <label for="page-title">page title</label><br />
+         <input type="text" id="page-title" name="pa_title" class="widefat" value="<?php echo get_post_meta(get_the_id(),'_post_title_', true); ?>">
+	</p>
+	<p>
+		 <label for="page-title">page sub title</label><br />
+         <input type="text" id="page-title" name="pa_sub_title" class="widefat" value="<?php echo get_post_meta(get_the_id(),'_post_sub_title_', true); ?>">
+	</p>
+	<p> 
+     <label for="onff">Show the sub header</label>
+     <input type="checkbox"  name="onff" value="show" <?php $subHeaderCon = get_post_meta(get_the_id(),'_chck_title_', true);
+        if($subHeaderCon == 'show'){ echo "checked"; }
+
+      ?>>
+	</p>
+
+<?php }
+
+add_action('save_post', function(){
+ $pageTitle = $_REQUEST['pa_title'];
+ $subPageTi = $_REQUEST['pa_sub_title'];
+ $checkBox =$_REQUEST['onoff'];
+
+ update_post_meta(get_the_id(),'_post_title_',$pageTitle);
+
+ update_post_meta(get_the_id(),'_post_sub_title_',$subPageTi);
+
+ update_post_meta(get_the_id(),'_chck_title_',$checkBox);
+});
+
+add_action('woocommerce_before_shop_loop','before_loop_markup');
+
+function before_loop_markup(){
+	?>
+    <section>
+      <div class="container">
+<?php }
+
+add_action('woocommerce_after_shop_loop','affter_shop_loop');
+function affter_shop_loop(){
+	?>
+</div>
+</section>>
+	<?php
+}
+// woocommerce before shop loop
+
+add_action('woocommerce_before_shop_loop','woo_before');
+function woo_before(){
+	
+}
+
+
+
+
+
+
+

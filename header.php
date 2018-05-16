@@ -38,6 +38,7 @@
                   <div class="col-xs-6">
                     <div class="row">
                       <h6 class="upper">Your Cart</h6>
+                      <h1>Hellow world</h1>
                     </div>
                   </div>
                   <div class="col-xs-6 text-right">
@@ -238,6 +239,8 @@
               </ul>
             </li>
           </ul> -->
+
+          
         </div>
       </div>
     </header>

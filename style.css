@@ -48,7 +48,8 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 
 
 #wpadminbar {
-	top: 90%;
+	top: 0%;
+	height: 2px !important;
 }
 
 
